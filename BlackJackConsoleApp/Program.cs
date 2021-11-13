@@ -4,7 +4,7 @@ namespace BlackJackConsoleApp
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
             var blackJack = new BlackJack();
             blackJack.Deal();
@@ -29,13 +29,12 @@ namespace BlackJackConsoleApp
                 }
             }
 
-            Console.WriteLine("-------------------------");
+            Console.WriteLine("\n-------------------------");
             PrintPlayerInfo(blackJack.Computer);
             PrintPlayerInfo(blackJack.Player);
             if (blackJack.IsDraw)
             {
                 Console.WriteLine($"Draw!");
-                
             }
             else
             {

@@ -56,10 +56,6 @@ namespace BlackJackConsoleApp
                     Winner = Player;
                     IsComplete = true;
                 }
-                else
-                {
-                    return;
-                }
             }
             else
             {
