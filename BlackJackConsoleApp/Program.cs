@@ -12,7 +12,10 @@ namespace BlackJackConsoleApp
             while (blackJack.IsComplete == false)
             {
                 PrintPlayerInfo(blackJack.Computer);
+                Console.WriteLine($"Score: {blackJack.Computer.BlackJackScore}");
                 PrintPlayerInfo(blackJack.Player);
+                blackJack.ChooseAce(blackJack.Player.Cards);
+                Console.WriteLine($"Score: {blackJack.Player.BlackJackScore}");
                 Console.WriteLine("c = continue");
                 Console.WriteLine("s = stop");
                 var option = Console.ReadKey();
@@ -31,7 +34,9 @@ namespace BlackJackConsoleApp
 
             Console.WriteLine("\n-------------------------");
             PrintPlayerInfo(blackJack.Computer);
+            Console.WriteLine($"Score: {blackJack.Computer.BlackJackScore}");
             PrintPlayerInfo(blackJack.Player);
+            Console.WriteLine($"Score: {blackJack.Player.BlackJackScore}");
             if (blackJack.IsDraw)
             {
                 Console.WriteLine($"Draw!");
@@ -44,7 +49,7 @@ namespace BlackJackConsoleApp
 
         private static void PrintPlayerInfo(Player player)
         {
-            Console.WriteLine($"{player.Name}, Score: {player.BlackJackScore}");
+            Console.WriteLine($"{player.Name}");
             foreach (var card in player.Cards)
             {
                 Console.WriteLine($"Color: {card.Color}, Value: {card.Value}");
