@@ -14,7 +14,7 @@ namespace BlackJackConsoleApp
                 PrintPlayerInfo(blackJack.Computer);
                 PrintPlayerScore(blackJack.Computer);
                 PrintPlayerInfo(blackJack.Player);
-                blackJack.ChooseAce(blackJack.Player.Cards);
+                blackJack.ChooseAce();
                 PrintPlayerScore(blackJack.Player);
 
                 Console.WriteLine("c = continue");
