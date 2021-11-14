@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BlackJackConsoleApp
 {
@@ -13,6 +14,13 @@ namespace BlackJackConsoleApp
         public bool IsComplete { get; private set; }
         public bool IsDraw { get; private set; }
         public Player Winner { get; private set; }
+
+        public BlackJack(Deck deck, Player player, Player computer)
+        {
+            Deck = deck;
+            Player = player;
+            Computer = computer;
+        }
 
         public BlackJack()
         {
@@ -67,21 +75,14 @@ namespace BlackJackConsoleApp
             }
         }
 
-        public void ChooseAce()
+        public void ChooseAce(Func<bool> getAceHighValue)
         {
-            foreach (Card card in Player.Cards)
+            foreach (Card card in Player.Cards.Where(c => !c.IsPicked))
             {
                 if (card.Value == CardValue.Ace)
                 {
-                    Console.WriteLine("Oh you got an Ace!");
-                    Console.WriteLine("Ace high? y = yes");
-                    var option = Console.ReadKey();
-                    Console.WriteLine();
-                    card.IsHigh = option.KeyChar switch
-                    {
-                        'y' => true,
-                        _ => false,
-                    };
+                    card.IsHigh = getAceHighValue();
+                    card.IsPicked = true;
                 }
             }
         }

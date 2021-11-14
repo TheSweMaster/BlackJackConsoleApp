@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace BlackJackConsoleApp
 {
@@ -14,7 +15,7 @@ namespace BlackJackConsoleApp
                 PrintPlayerInfo(blackJack.Computer);
                 PrintPlayerScore(blackJack.Computer);
                 PrintPlayerInfo(blackJack.Player);
-                blackJack.ChooseAce();
+                blackJack.ChooseAce(GetAceHighInput);
                 PrintPlayerScore(blackJack.Player);
 
                 Console.WriteLine("c = continue");
@@ -47,6 +48,19 @@ namespace BlackJackConsoleApp
             {
                 Console.WriteLine($"Winner: {blackJack.Winner.Name}");
             }
+        }
+
+        private static bool GetAceHighInput()
+        {
+            Console.WriteLine("Oh you got an Ace!");
+            Console.WriteLine("Ace high? y = yes");
+            var input = Console.ReadKey();
+            Console.WriteLine();
+            return input.KeyChar switch
+            {
+                'y' => true,
+                _ => false,
+            };
         }
 
         private static void PrintPlayerInfo(Player player)

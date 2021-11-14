@@ -12,6 +12,7 @@
         public int Id { get; }
         public CardValue Value { get; }
         public bool IsHigh { get; set; }
+        public bool IsPicked { get; set; }
         public CardColor Color { get; }
     }
 }
