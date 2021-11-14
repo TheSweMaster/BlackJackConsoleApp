@@ -12,13 +12,15 @@ namespace BlackJackConsoleApp
             while (blackJack.IsComplete == false)
             {
                 PrintPlayerInfo(blackJack.Computer);
-                Console.WriteLine($"Score: {blackJack.Computer.BlackJackScore}");
+                PrintPlayerScore(blackJack.Computer);
                 PrintPlayerInfo(blackJack.Player);
                 blackJack.ChooseAce(blackJack.Player.Cards);
-                Console.WriteLine($"Score: {blackJack.Player.BlackJackScore}");
+                PrintPlayerScore(blackJack.Player);
+
                 Console.WriteLine("c = continue");
                 Console.WriteLine("s = stop");
                 var option = Console.ReadKey();
+                Console.WriteLine();
                 switch (option.KeyChar)
                 {
                     case 'c':
@@ -32,11 +34,11 @@ namespace BlackJackConsoleApp
                 }
             }
 
-            Console.WriteLine("\n-------------------------");
+            Console.WriteLine("-------------------------");
             PrintPlayerInfo(blackJack.Computer);
-            Console.WriteLine($"Score: {blackJack.Computer.BlackJackScore}");
+            PrintPlayerScore(blackJack.Computer);
             PrintPlayerInfo(blackJack.Player);
-            Console.WriteLine($"Score: {blackJack.Player.BlackJackScore}");
+            PrintPlayerScore(blackJack.Player);
             if (blackJack.IsDraw)
             {
                 Console.WriteLine($"Draw!");
@@ -54,6 +56,11 @@ namespace BlackJackConsoleApp
             {
                 Console.WriteLine($"Color: {card.Color}, Value: {card.Value}");
             }
+        }
+
+        private static void PrintPlayerScore(Player player)
+        {
+            Console.WriteLine($"Score: {player.BlackJackScore}");
         }
     }
 }

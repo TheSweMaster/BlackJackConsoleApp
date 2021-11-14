@@ -42,13 +42,13 @@ namespace BlackJackConsoleApp
 
         public void Deal()
         {
-            List<Card> currentCards = Player.TakeCardsFromDeck(Deck, 2);
+            Player.TakeCardsFromDeck(Deck, 2);
             Computer.TakeCardsFromDeck(Deck, 2);
         }
 
         public void Continue()
         {
-            List<Card> currentCards = Player.TakeCardsFromDeck(Deck, 1);
+            Player.TakeCardsFromDeck(Deck, 1);
 
             if (Player.BlackJackScore <= BlackJackWinScore)
             {
@@ -75,6 +75,7 @@ namespace BlackJackConsoleApp
                     Console.WriteLine("Oh you got an Ace!");
                     Console.WriteLine("Ace high? y = yes");
                     var option = Console.ReadKey();
+                    Console.WriteLine();
                     card.IsHigh = option.KeyChar switch
                     {
                         'y' => true,
@@ -130,13 +131,11 @@ namespace BlackJackConsoleApp
         public List<Card> Cards { get; private set; }
         public bool IsComputer { get; private set; }
 
-        public List<Card> TakeCardsFromDeck(Deck deck, int amount)
+        public void TakeCardsFromDeck(Deck deck, int amount)
         {
             List<Card> currentCards = deck.Cards.Take(amount).ToList();
             Cards.AddRange(currentCards);
             deck.Cards.RemoveRange(0, amount);
-
-            return currentCards;
         }
 
         // TODO: Fix ace high for the computer, try high and low for every combination and result highest result at 21 or lower
