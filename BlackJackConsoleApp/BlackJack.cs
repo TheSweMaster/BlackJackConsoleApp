@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace BlackJackConsoleApp
@@ -17,15 +18,15 @@ namespace BlackJackConsoleApp
         public BlackJack()
         {
             Deck = new Deck();
-            Player = new Player("Player 1");
-            Computer = new Player("Computer");
+            Player = new Player("Player 1", false);
+            Computer = new Player("Computer", true);
         }
 
-        public static int MapToBlackJackValue(CardValue cardValue, bool aceHigh)
+        public static int MapToBlackJackValue(CardValue cardValue, bool isHigh)
         {
             return cardValue switch
             {
-                CardValue.Ace => aceHigh ? 11 : 1,
+                CardValue.Ace => isHigh ? 11 : 1,
                 CardValue.Two => 2,
                 CardValue.Three => 3,
                 CardValue.Four => 4,
@@ -48,6 +49,7 @@ namespace BlackJackConsoleApp
         public void Continue()
         {
             Player.TakeCardsFromDeck(Deck, 1);
+
             if (Player.BlackJackScore <= BlackJackWinScore)
             {
                 PlayComputer();
@@ -61,6 +63,25 @@ namespace BlackJackConsoleApp
             {
                 Winner = Computer;
                 IsComplete = true;
+            }
+        }
+
+        public void ChooseAce(List<Card> currentCards)
+        {
+            foreach (Card card in currentCards)
+            {
+                if (card.Value == CardValue.Ace)
+                {
+                    Console.WriteLine("Oh you got an Ace!");
+                    Console.WriteLine("Ace high? y = yes");
+                    var option = Console.ReadKey();
+                    Console.WriteLine();
+                    card.IsHigh = option.KeyChar switch
+                    {
+                        'y' => true,
+                        _ => false,
+                    };
+                }
             }
         }
 
@@ -99,22 +120,25 @@ namespace BlackJackConsoleApp
 
     public class Player
     {
-        public Player(string name)
+        public Player(string name, bool isComputer)
         {
             Name = name;
+            IsComputer = isComputer;
             Cards = new List<Card>();
         }
 
         public string Name { get; private set; }
         public List<Card> Cards { get; private set; }
+        public bool IsComputer { get; private set; }
 
         public void TakeCardsFromDeck(Deck deck, int amount)
         {
-            Cards.AddRange(deck.Cards.Take(amount));
+            List<Card> currentCards = deck.Cards.Take(amount).ToList();
+            Cards.AddRange(currentCards);
             deck.Cards.RemoveRange(0, amount);
         }
 
-        // TODO: Fix ace high, try high and low for every combination and result highest result at 21 or lower
-        public int BlackJackScore => Cards.Sum(c => BlackJack.MapToBlackJackValue(c.Value, true));
+        // TODO: Fix ace high for the computer, try high and low for every combination and result highest result at 21 or lower
+        public int BlackJackScore => Cards.Sum(c => BlackJack.MapToBlackJackValue(c.Value, c.IsHigh));
     }
 }

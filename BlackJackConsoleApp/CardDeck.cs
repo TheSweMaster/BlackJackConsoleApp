@@ -58,24 +58,25 @@ namespace BlackJackConsoleApp
 
         public int Id { get; }
         public CardValue Value { get; }
+        public bool IsHigh { get; set; }
         public CardColor Color { get; }
     }
 
     public enum CardValue
     {
-        Ace = 1,
-        Two = 2,
-        Three = 3,
-        Four = 4,
-        Five = 5,
-        Six = 6,
-        Seven = 7,
-        Eight = 8,
-        Nine = 9,
-        Ten = 10,
-        Knight = 11,
-        Queen = 12,
-        King = 13,
+        Ace,
+        Two,
+        Three,
+        Four,
+        Five,
+        Six,
+        Seven,
+        Eight,
+        Nine,
+        Ten,
+        Knight,
+        Queen,
+        King,
     }
 
     public enum CardColor
